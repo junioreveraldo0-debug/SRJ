@@ -1,23 +1,26 @@
+import { Redis } from "@upstash/redis";
 
-import { v4 as uuidv4 } from 'uuid';
-import { readJSON, writeJSON } from '../../../lib/storage';
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
-export default async function handler(req,res){
-  try{
-    if(req.method==='GET'){
-      const list = await readJSON('artigos');
-      return res.json(list);
+export default async function handler(req, res) {
+  if (req.method === "GET") {
+    const articles = (await redis.lrange("articles", 0, -1)).map(JSON.parse);
+    return res.status(200).json(articles);
+  }
+
+  if (req.method === "POST") {
+    try {
+      const article = req.body;
+      await redis.rpush("articles", JSON.stringify(article));
+      return res.status(201).json({ message: "Artigo salvo com sucesso!" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao salvar artigo" });
     }
-    if(req.method==='POST'){
-      const { name, supplier, width } = req.body;
-      if(!name) return res.status(400).send('Nome obrigatório');
-      const list = await readJSON('artigos');
-      const id = uuidv4();
-      const article = { id, name, supplier: supplier||'', width: width||'' };
-      list.push(article);
-      await writeJSON('artigos', list);
-      return res.json(article);
-    }
-    res.status(405).end();
-  }catch(e){ console.error(e); res.status(500).send('Erro') }
+  }
+
+  return res.status(405).json({ message: "Método não permitido" });
 }

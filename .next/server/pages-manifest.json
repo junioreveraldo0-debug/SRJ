@@ -2,5 +2,12 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/api/reports/inventory": "pages/api/reports/inventory.js",
+  "/api/auth/login": "pages/api/auth/login.js",
+  "/dashboard": "pages/dashboard.js",
+  "/articles": "pages/articles.js",
+  "/api/articles": "pages/api/articles.js",
+  "/api/users/me": "pages/api/users/me.js",
+  "/entrada": "pages/entrada.js"
 }
