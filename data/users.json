@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin",
+    "name": "Administrador",
+    "password": "$2a$10$Q4flCRR9MhWM6nREr5GuyOEz1LNcl8R3xIx.mWatjTkxTODbW35Ym",
+    "role": "admin"
+  },
+  {
+    "username": "cadastro",
+    "name": "operador",
+    "password": "$2a$10$fk0E7ehtQGQ87v3wG/bpCuS8cYphdmIzz7nPgZwwHnw5NSX1BYNNC",
+    "role": "usuario"
+  }
+]
